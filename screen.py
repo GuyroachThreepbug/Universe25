@@ -1,6 +1,6 @@
 import pygame
 
-def draw_game_screen(screen, font, day, colony):
+def draw_game_screen(screen, font, day, colony, BeautifulOne):
     screen.fill((30, 30, 30))
     
     pygame.display.set_caption("Universe 25")
@@ -20,4 +20,11 @@ def draw_game_screen(screen, font, day, colony):
     p_surface = font.render(f"Day: {p}", True, (255, 255, 255))
     p_rect = p_surface.get_rect()
     p_rect.center = (400 - 10, 10)
-    screen.blit(p_surface, p_rect)
+    screen.blit(p_surface, p_rect) 
+    
+    f = BeautifulOne.frustration_points
+    
+    d = BeautifulOne.depression_points
+    
+        
+    

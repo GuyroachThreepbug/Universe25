@@ -9,12 +9,6 @@ class BeautifulOne():
     def __init__(self, frustration_points, depression_points):
         self.frustration_points = 0
         self.depression_points = 0
-
-    def frustration_meter(frustration_points):
-        pass
-    
-    def depression_meter(depression_points):
-        pass
         
     def War(self):
         ##code for putting out traps
