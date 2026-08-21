@@ -6,9 +6,11 @@ import functions
 
 class BeautifulOne():
     
-    def __init__(self, frustration_points, depression_points):
+    def __init__(self):
         self.frustration_points = 0
+        self.max_frustration_points = 100
         self.depression_points = 0
+        self.max_depression_points = 100
         
     def War(self):
         ##code for putting out traps

@@ -28,6 +28,7 @@ def main():
     running = True
     
     test = Colony(3, pause_manager)
+    TBO = BeautifulOne()
     
     while running:
         
@@ -45,7 +46,7 @@ def main():
             draw_pause_menu(screen, font)
         else:
             test.check_events()
-            draw_game_screen(screen, font, day, test)
+            draw_game_screen(screen, font, day, test, TBO)
 
         pygame.display.flip()
             
