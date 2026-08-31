@@ -22,7 +22,7 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
 
 
 ##days passed display
-    p = day.check_cal()
+    p = day.check_cal() + 1
     p_surface = font.render(f"Day: {p}", True, (255, 255, 255))
     p_rect = p_surface.get_rect()
     p_rect.center = (400 - 10, 10)
@@ -35,6 +35,7 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
     x, y, width, height = 50, 50, 25, 300
     
     fm_rect = pygame.Rect(x, y, width, height)
+    fm_rect.bottomleft = (50, 590)
     pygame.draw.rect(screen, (60, 60, 60), fm_rect)
     pygame.draw.rect(screen, (255, 255, 255), fm_rect, 2)
 
@@ -51,9 +52,10 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
     d = BeautifulOne.depression_points
     dm = BeautifulOne.max_depression_points
     
-    x, y, width, height = 50, 350, 25, 300
+    x, y, width, height = 10, 10, 25, 300
     
     dm_rect = pygame.Rect(x, y, width, height)
+    dm_rect.bottomleft = (10, 590)
     pygame.draw.rect(screen, (60, 60, 60), dm_rect)
     pygame.draw.rect(screen, (255, 255, 255), dm_rect, 2)
 
@@ -65,5 +67,4 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
     fill_rect = pygame.Rect(x, fill_y, width, fill_height)
     pygame.draw.rect(screen, (0, 0, 255), fill_rect)
     
-    ###meters currently stacking on top of each other, look into how to anchor to the bottom
     
