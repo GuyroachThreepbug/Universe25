@@ -26,8 +26,7 @@ def main():
     day = Day(max_turns=3, dur=end, pause_manager=pause_manager)
     
     running = True
-    
-    test = Colony(3, pause_manager)
+    test = Colony(3, pause_manager, day)
     Beaut = BeautifulOne()
     
     while running:

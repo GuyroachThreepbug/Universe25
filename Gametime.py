@@ -1,6 +1,6 @@
 
 import pygame
-from Pause import *
+
 
 class Day():
     def __init__(self, max_turns, dur, pause_manager):

@@ -45,6 +45,7 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
     # 3. Fill rect position shifts down as height shrinks
     fill_y = y + (height - fill_height)
     fill_rect = pygame.Rect(x, fill_y, width, fill_height)
+    fill_rect.bottomleft = (50, 590)
     pygame.draw.rect(screen, (0, 255, 0), fill_rect)
     
 ## depression meter display
@@ -65,6 +66,33 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
     # 3. Fill rect position shifts down as height shrinks
     fill_y = y + (height - fill_height)
     fill_rect = pygame.Rect(x, fill_y, width, fill_height)
+    fill_rect.bottomleft = (10, 590)
     pygame.draw.rect(screen, (0, 0, 255), fill_rect)
     
+## hunger display
+
+    h = colony.hunger
+    demand = colony.food_demand
     
+    x, y, width, height = 750, 10, 25, 300
+    
+    demand_rect = pygame.Rect(x, y, width, height)
+    demand_rect.bottomleft = (750, 590)
+    pygame.draw.rect(screen, (60, 60, 60), demand_rect)
+    pygame.draw.rect(screen, (255, 255, 255), demand_rect, 2)
+    
+    ratio = h / demand
+    fill_height = int(height * ratio)
+    
+    fill_y = y + (height - fill_height)
+    fill_rect = pygame.Rect(x, fill_y, width, fill_height)
+    fill_rect.bottomleft = (750, 590)
+    pygame.draw.rect(screen, (255, 0, 0), fill_rect)   
+    
+    ## remaining turns display
+    
+    ## food storage display
+    
+    ## dice roll display
+    
+    ## flavortext display 
