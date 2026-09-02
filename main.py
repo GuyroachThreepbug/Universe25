@@ -8,7 +8,8 @@ from Gametime import *
 from Pause import *
 from PauseMenu import *
 from screen import *
-
+import pygame_widgets
+from pygame_widgets.button import Button
 
 def main():    
     pygame.init()
@@ -28,6 +29,7 @@ def main():
     running = True
     test = Colony(3, pause_manager, day)
     Beaut = BeautifulOne()
+    home = nest(100, 100)
     
     while running:
         
@@ -45,8 +47,9 @@ def main():
             draw_pause_menu(screen, font)
         else:
             test.check_events()
-            draw_game_screen(screen, font, day, test, Beaut)
+            draw_game_screen(screen, font, day, test, Beaut, home)
 
+            test.feed()
         pygame.display.flip()
             
         clock.tick(60)

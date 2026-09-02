@@ -2,15 +2,7 @@ import random
 import BeautifulOne
 
 
-def dice_roll(num_dice):
-    
-    roll = []
-    
-    for _ in range(num_dice):
-        result = random.randint(1, 6)
-        roll.append(result)
-        score = sum(roll)
-    return score
+
 
 def forage():
     score = dice_roll(2)

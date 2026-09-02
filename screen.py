@@ -1,20 +1,22 @@
 import pygame
+import pygame_widgets
+from pygame_widgets.button import Button
 
-def draw_game_screen(screen, font, day, colony, BeautifulOne):
+def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
     screen.fill((30, 30, 30))
     
     pygame.display.set_caption("Universe 25")
 
 
 ##colony count display
-    text_surface = font.render(f"Colony size: {colony.size}", True, (255, 255, 255))
+    text_surface = font.render(f"Colony size: {Colony.size}", True, (255, 255, 255))
     text_rect = text_surface.get_rect()
     text_rect.topright = (800 - 10, 10)
     screen.blit(text_surface, text_rect)
 
 ##in-game time display
 
-    c = day.game_time()
+    c = Day.game_time()
     c_surface = font.render(f"{c}", True, (255, 255, 255))
     c_rect = c_surface.get_rect()
     c_rect.topleft = (50 - 10, 10)
@@ -22,7 +24,7 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
 
 
 ##days passed display
-    p = day.check_cal() + 1
+    p = Day.check_cal() + 1
     p_surface = font.render(f"Day: {p}", True, (255, 255, 255))
     p_rect = p_surface.get_rect()
     p_rect.center = (400 - 10, 10)
@@ -71,8 +73,8 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
     
 ## hunger display
 
-    h = colony.hunger
-    demand = colony.food_demand
+    h = Colony.hunger
+    demand = Colony.food_demand
     
     x, y, width, height = 750, 10, 25, 300
     
@@ -92,7 +94,22 @@ def draw_game_screen(screen, font, day, colony, BeautifulOne):
     ## remaining turns display
     
     ## food storage display
+    s = nest.storage
+    p = Colony.stockpile
     
+    x, y, width, height = 710, 10, 25, 300
+    stockpile_rect = pygame.Rect(x, y, width, height)
+    stockpile_rect.bottomleft = 710, 590
+    pygame.draw.rect(screen, (60, 60, 60), stockpile_rect)
+    pygame.draw.rect(screen, (255, 255, 255), stockpile_rect, 2)
+    
+    ratio = p / s
+    fill_height = int(height * ratio)
+    
+    fill_y = y + (height - fill_height)
+    fill_rect = pygame.Rect(x, fill_y, width, fill_height)
+    fill_rect.bottomleft = (710, 590)
+    pygame.draw.rect(screen, (0, 255, 0), fill_rect)
     ## dice roll display
     
     ## flavortext display 
