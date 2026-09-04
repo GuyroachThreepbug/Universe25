@@ -18,7 +18,7 @@ class Colony():
         self.grow_interval = 2520000
         self.last_breed = pause_manager.get_adjusted_ticks()
         self.last_grow = pause_manager.get_adjusted_ticks()
-        self.food_demand = self.size * 3
+        self.food_demand = (self.size + self.babies) * 3
         self.stockpile = 5
         self.feed_rate = self.food_demand / Day.dur
         
@@ -50,7 +50,6 @@ class Colony():
             if self.hunger >= 0:  
                 self.stockpile -= self.feed_rate
                 self.hunger += self.feed_rate
-                print("chomp")
         else:
             self.hunger -= self.feed_rate
     
@@ -73,7 +72,7 @@ class Colony():
             if haul >= 10:
                 self.stockpile += 6
                 ##rotating flavor text about what items were found - success roll
-            if haul >= 6:
+            if haul >= 6 and haul < 10:
                 self.stockpile += 3
                 ##flavor text explaining why haul is low
             else:

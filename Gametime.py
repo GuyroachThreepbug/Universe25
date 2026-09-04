@@ -27,6 +27,8 @@ class Day():
         return f"{h:02d}:{m:02d}"
     
     def morning(self):
+        ## define perameters, needs to interact with TBO.schedule
+        
         pass
     
     def evening(self):

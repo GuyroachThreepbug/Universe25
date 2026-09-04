@@ -9,7 +9,7 @@ from Pause import *
 from PauseMenu import *
 from screen import *
 import pygame_widgets
-from pygame_widgets.button import Button
+from pygame_widgets.button import ButtonArray
 
 def main():    
     pygame.init()
@@ -31,9 +31,24 @@ def main():
     Beaut = BeautifulOne()
     home = nest(100, 100)
     
+    ## action buttons
+    buttonArray = ButtonArray(
+    
+    screen,
+    500,  # X
+    400,  # Y
+    250,  # Width
+    150,  # Height
+    (2, 2),  # 2 buttons wide, 2 tall
+    border=100,  # padding
+    texts=('1', '2', '3', '4'),  # text left to right then top to bottom
+    # When clicked, print number
+    onClicks=(lambda: print('1'), lambda: print('2'), lambda: print('3'), lambda: print('4'))
+    )
+    
     while running:
-        
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -50,6 +65,7 @@ def main():
             draw_game_screen(screen, font, day, test, Beaut, home)
 
             test.feed()
+        pygame_widgets.update(events)
         pygame.display.flip()
             
         clock.tick(60)

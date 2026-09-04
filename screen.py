@@ -1,6 +1,6 @@
 import pygame
 import pygame_widgets
-from pygame_widgets.button import Button
+from pygame_widgets.button import ButtonArray
 
 def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
     screen.fill((30, 30, 30))
@@ -48,7 +48,7 @@ def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
     fill_y = y + (height - fill_height)
     fill_rect = pygame.Rect(x, fill_y, width, fill_height)
     fill_rect.bottomleft = (50, 590)
-    pygame.draw.rect(screen, (0, 255, 0), fill_rect)
+    pygame.draw.rect(screen, (74, 4, 4), fill_rect)
     
 ## depression meter display
     
@@ -69,7 +69,7 @@ def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
     fill_y = y + (height - fill_height)
     fill_rect = pygame.Rect(x, fill_y, width, fill_height)
     fill_rect.bottomleft = (10, 590)
-    pygame.draw.rect(screen, (0, 0, 255), fill_rect)
+    pygame.draw.rect(screen, (137, 207, 240), fill_rect)
     
 ## hunger display
 
@@ -89,7 +89,7 @@ def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
     fill_y = y + (height - fill_height)
     fill_rect = pygame.Rect(x, fill_y, width, fill_height)
     fill_rect.bottomleft = (750, 590)
-    pygame.draw.rect(screen, (255, 0, 0), fill_rect)   
+    pygame.draw.rect(screen, (53, 94, 59), fill_rect)   
     
     ## remaining turns display
     
@@ -109,7 +109,9 @@ def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
     fill_y = y + (height - fill_height)
     fill_rect = pygame.Rect(x, fill_y, width, fill_height)
     fill_rect.bottomleft = (710, 590)
-    pygame.draw.rect(screen, (0, 255, 0), fill_rect)
+    pygame.draw.rect(screen, (156, 175, 136), fill_rect)
     ## dice roll display
     
-    ## flavortext display 
+    ## flavortext display
+    
+    ## action buttons moved to main
