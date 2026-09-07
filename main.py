@@ -31,7 +31,7 @@ def main():
     Beaut = BeautifulOne()
     home = nest(100, 100)
     
-    ## action buttons
+    
     buttonArray = ButtonArray(
     
     screen,

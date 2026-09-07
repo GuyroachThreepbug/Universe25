@@ -1,6 +1,7 @@
 
 import time
 from Gametime import *
+from BeautifulOne import BeautifulOne
 import pygame
 import random
 ##replacing last_brood with pygame event trigger
@@ -8,7 +9,7 @@ import random
 
 class Colony():
     
-    def __init__(self, size, pause_manager, Day):
+    def __init__(self, size, pause_manager, day):
         self.size = size
         self.nest = nest
         self.hunger = 2
@@ -18,24 +19,25 @@ class Colony():
         self.grow_interval = 2520000
         self.last_breed = pause_manager.get_adjusted_ticks()
         self.last_grow = pause_manager.get_adjusted_ticks()
-        self.food_demand = (self.size + self.babies) * 3
-        self.stockpile = 5
-        self.feed_rate = self.food_demand / Day.dur
-        
+        self.food_demand = self.size * 3
+        self.stockpile = 0
+        self.feed_rate = self.food_demand / day.dur
+        self.dice_pool = 3
+
     def reproduce(self):
         pair = int(self.size / 2)
         make = pair * random.randint(1, 5)
         self.babies += make
-        return self.babies
+        print(f"babies: {self.babies}")
 
     def moveUp(self):
         self.size += self.babies
         self.babies = 0
-        return self.size
+        print(f"size: {self.size}")
 
     def check_events(self):
         now = self.pause_manager.get_adjusted_ticks()
-                
+        
         if now - self.last_breed >= self.breed_interval:
             self.reproduce()
             self.last_breed = now
@@ -52,33 +54,28 @@ class Colony():
                 self.hunger += self.feed_rate
         else:
             self.hunger -= self.feed_rate
+        
+        return self.stockpile, self.hunger
     
-    def dice_roll(num_dice):
+    def dice_roll(self, dice_pool):
     
         roll = []
     
-        for _ in range(num_dice):
+        for _ in range(dice_pool):
             result = random.randint(1, 6)
             roll.append(result)
             score = sum(roll)
             return score
     
     def forage(self):
-        if self.stockpile >= nest.storage:
-            ##come back later to implement mechanic
-            return
+        score = self.dice_roll(self.dice_pool)
+        if score >= 8:
+            self.stockpile += 5
+            self.hunger -= 5
+        elif score >= 5 and score <= 7:
+            self.hunger -= 3
         else:
-            haul = diceroll(3)
-            if haul >= 10:
-                self.stockpile += 6
-                ##rotating flavor text about what items were found - success roll
-            if haul >= 6 and haul < 10:
-                self.stockpile += 3
-                ##flavor text explaining why haul is low
-            else:
-                BeautifulOne.frustration_points += 2
-    
-            
+            BeautifulOne.frustration_points += 5
 class nest():
     
     def __init__(self, capasity, storage):
