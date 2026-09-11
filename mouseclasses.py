@@ -45,19 +45,17 @@ class Colony():
             self.last_grow = now
         
     
-    def feed(self):
-        
-        if self.stockpile > 0:
-            if self.hunger >= 0:  
-                self.stockpile -= self.feed_rate
-                self.hunger += self.feed_rate
-                print("chompchomp")
-                print(f"Stockpile: {self.stockpile}, Hunger: {self.hunger}")
-        else:
-            self.hunger -= self.feed_rate
-            print("chomp")
-        
-        return self.stockpile, self.hunger
+    def feed(self,day):
+        if not day.is_paused:
+            if self.stockpile > 0:
+                if self.hunger >= 0:  
+                    self.stockpile -= self.feed_rate
+                    self.hunger += self.feed_rate
+                    print("chompchomp")
+                    print(f"Stockpile: {self.stockpile}, Hunger: {self.hunger}")
+            else:
+                self.hunger -= self.feed_rate
+                print("chomp")
     
     def dice_roll(self, dice_pool):
     
@@ -78,6 +76,12 @@ class Colony():
             self.hunger -= 3
         else:
             Beaut.frustration_points += 5
+            
+    def fresh_out(self):
+        if self.hunger == 0:
+            self.size -= 1
+        pass
+            
             
 class nest():
     

@@ -68,7 +68,7 @@ def main():
 
         draw_game_screen(screen, font, test, Beaut, home, day)        
         manager.draw_ui(screen)
-        test.feed()
+        test.feed(day)
         pygame.display.flip()
         
     pygame.quit()
