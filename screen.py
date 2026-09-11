@@ -1,8 +1,8 @@
 import pygame
 import pygame_widgets
-from pygame_widgets.button import ButtonArray
+import pygame_gui
 
-def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
+def draw_game_screen(screen, font, Colony, BeautifulOne, nest, day):
     screen.fill((30, 30, 30))
     
     pygame.display.set_caption("Universe 25")
@@ -16,7 +16,7 @@ def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
 
 ##in-game time display
 
-    c = Day.game_time()
+    c = day.game_time()
     c_surface = font.render(f"{c}", True, (255, 255, 255))
     c_rect = c_surface.get_rect()
     c_rect.topleft = (50 - 10, 10)
@@ -24,7 +24,7 @@ def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
 
 
 ##days passed display
-    p = Day.check_cal() + 1
+    p = day.check_cal() + 1
     p_surface = font.render(f"Day: {p}", True, (255, 255, 255))
     p_rect = p_surface.get_rect()
     p_rect.center = (400 - 10, 10)
@@ -114,4 +114,6 @@ def draw_game_screen(screen, font, Day, Colony, BeautifulOne, nest):
     
     ## flavortext display
     
-    ## action buttons moved to main
+    ## BUTTON LOGIC
+    
+   

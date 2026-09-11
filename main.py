@@ -1,15 +1,14 @@
 #mainLoop
+
 import pygame
 from mouseclasses import *
 import time
 from BeautifulOne import *
 import sys
-from Gametime import *
+from screen import *
+import pygame_gui
 from Pause import *
 from PauseMenu import *
-from screen import *
-import pygame_widgets
-from pygame_widgets.button import ButtonArray
 
 def main():    
     pygame.init()
@@ -23,52 +22,54 @@ def main():
     end = seconds_per_day * 1000
 
 
-    pause_manager = PauseManager()  
-    day = Day(max_turns=3, dur=end, pause_manager=pause_manager)
+    manager = pygame_gui.UIManager((screen.get_width(), screen.get_height()))
+    
+    day = Day(max_turns=3, dur=end)
     
     running = True
-    test = Colony(3, pause_manager, day)
+    test = Colony(3, day)
     Beaut = BeautifulOne()
     home = nest(100, 100)
     
     
-    buttonArray = ButtonArray(
-    
-    screen,
-    500,  # X
-    400,  # Y
-    250,  # Width
-    150,  # Height
-    (2, 2),  # 2 buttons wide, 2 tall
-    border=100,  # padding
-    texts=('1', '2', '3', '4'),  # text left to right then top to bottom
-    # When clicked, print number
-    onClicks=(lambda: print('1'), lambda: print('2'), lambda: print('3'), lambda: print('4'))
-    )
+    faster = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),text='faster!', manager=manager)
+    reset = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 350), (100, 50)),text='reset', manager=manager)
+    FoodRun = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 425), (100, 50)),text='Forage', manager=manager)
     
     while running:
-        events = pygame.event.get()
-        for event in events:
+        real_delta_ms = clock.tick(60)
+        time_delta = real_delta_ms / 1000.0
+        day.advance(real_delta_ms)
+        clock.tick(60)
+        for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    if pause_manager.is_paused:
-                        pause_manager.unpause()
+                    if not day.is_paused:
+                        day.pause()
+                        draw_pause_menu(screen, font)
                     else:
-                        pause_manager.pause()
-        if pause_manager.is_paused:
-            draw_pause_menu(screen, font)
-        else:
-            test.check_events()
-            draw_game_screen(screen, font, day, test, Beaut, home)
+                        day.unpause()
+            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == faster:
+                    day.speed_up()
+                    print("Speed Up button pressed!")
+                if event.ui_element == reset:
+                    day.reset_speed()
+                    print("Reset button pressed!")
+                if event.ui_element == FoodRun:
+                    test.forage(Beaut)
+            Colony.check_events(test, day)
+            manager.process_events(event)
+        manager.update(time_delta)
 
-            test.feed()
-        pygame_widgets.update(events)
+
+        draw_game_screen(screen, font, test, Beaut, home, day)        
+        manager.draw_ui(screen)
+        test.feed()
         pygame.display.flip()
-            
-        clock.tick(60)
         
     pygame.quit()
 

@@ -1,24 +1,48 @@
 import pygame
 
+class Day:
+    def __init__(self, max_turns, dur):
+        self.max_turns = max_turns
+        self.turns_remaining = 3
+        self.dur = dur
+        self.past = 0
+        self.pool = 2
 
-class PauseManager:
-    def __init__(self):
-        self.total_paused = 0
-        self.pause_started_at = None
         self.is_paused = False
+        self.world_speed = 1.0
+        self.elapsed = 0   # renamed from game_time to avoid clashing with the method below
 
-    def pause(self):
+    def advance(self, real_delta_ms):
         if not self.is_paused:
-            self.is_paused = True
-            self.pause_started_at = pygame.time.get_ticks()
-
-    def unpause(self):
-        if self.is_paused:
-            self.is_paused = False
-            paused_duration = pygame.time.get_ticks() - self.pause_started_at
-            self.total_paused += paused_duration
-            self.pause_started_at = None
+            self.elapsed += real_delta_ms * self.world_speed
 
     def get_adjusted_ticks(self):
-        return pygame.time.get_ticks() - self.total_paused
-    
+        return self.elapsed
+
+    def pause(self):
+        self.is_paused = True
+
+    def unpause(self):
+        self.is_paused = False
+
+    def speed_up(self):
+        self.world_speed *= 2.0
+        print(f"World speed increased to {self.world_speed}x")
+
+    def reset_speed(self):
+        self.world_speed = 1.0
+        print("World speed reset to normal")
+
+    def check_cal(self):
+        total = self.get_adjusted_ticks()
+        self.past = int(total // self.dur)
+        return self.past
+
+    def game_time(self):
+        total = self.get_adjusted_ticks()
+        today = total % self.dur
+        seconds = int(today // 1000)
+        h = seconds // 60
+        m = seconds % 60
+        return f"{h:02d}:{m:02d}"
+        

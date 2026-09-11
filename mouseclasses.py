@@ -1,7 +1,7 @@
 
 import time
-from Gametime import *
-from BeautifulOne import BeautifulOne
+
+
 import pygame
 import random
 ##replacing last_brood with pygame event trigger
@@ -9,19 +9,18 @@ import random
 
 class Colony():
     
-    def __init__(self, size, pause_manager, day):
+    def __init__(self, size, day):
         self.size = size
         self.nest = nest
         self.hunger = 2
         self.babies = 0
-        self.pause_manager = pause_manager
         self.breed_interval = random.randint(1260000, 1440000)
         self.grow_interval = 2520000
-        self.last_breed = pause_manager.get_adjusted_ticks()
-        self.last_grow = pause_manager.get_adjusted_ticks()
+        self.last_breed = day.get_adjusted_ticks()
+        self.last_grow = day.get_adjusted_ticks()
         self.food_demand = self.size * 3
-        self.stockpile = 0
-        self.feed_rate = self.food_demand / day.dur
+        self.stockpile = 5
+        self.feed_rate = self.food_demand / (day.dur / 500)
         self.dice_pool = 3
 
     def reproduce(self):
@@ -35,8 +34,8 @@ class Colony():
         self.babies = 0
         print(f"size: {self.size}")
 
-    def check_events(self):
-        now = self.pause_manager.get_adjusted_ticks()
+    def check_events(self, day):
+        now = day.get_adjusted_ticks()
         
         if now - self.last_breed >= self.breed_interval:
             self.reproduce()
@@ -52,8 +51,11 @@ class Colony():
             if self.hunger >= 0:  
                 self.stockpile -= self.feed_rate
                 self.hunger += self.feed_rate
+                print("chompchomp")
+                print(f"Stockpile: {self.stockpile}, Hunger: {self.hunger}")
         else:
             self.hunger -= self.feed_rate
+            print("chomp")
         
         return self.stockpile, self.hunger
     
@@ -67,7 +69,7 @@ class Colony():
             score = sum(roll)
             return score
     
-    def forage(self):
+    def forage(self, Beaut):
         score = self.dice_roll(self.dice_pool)
         if score >= 8:
             self.stockpile += 5
@@ -75,7 +77,8 @@ class Colony():
         elif score >= 5 and score <= 7:
             self.hunger -= 3
         else:
-            BeautifulOne.frustration_points += 5
+            Beaut.frustration_points += 5
+            
 class nest():
     
     def __init__(self, capasity, storage):
