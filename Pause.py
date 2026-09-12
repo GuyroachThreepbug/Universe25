@@ -6,6 +6,7 @@ class Day:
         self.turns_remaining = 3
         self.dur = dur
         self.past = 0
+        self.yesterday = 0
         self.pool = 2
 
         self.is_paused = False
@@ -45,4 +46,14 @@ class Day:
         h = seconds // 60
         m = seconds % 60
         return f"{h:02d}:{m:02d}"
-        
+    
+    def new_day(self):
+        current = self.check_cal()
+        if current != self.yesterday:
+            self.yesterday = current
+            return True
+        return False
+    
+    def turn_manager(self):
+        if self.new_day():
+            self.turns_remaining = self.max_turns

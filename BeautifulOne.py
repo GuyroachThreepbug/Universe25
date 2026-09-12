@@ -1,8 +1,6 @@
 import random
 
 import pygame
-import mouseclasses
-import functions
 
 ## frustration points might go down over time?
 

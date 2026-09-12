@@ -60,7 +60,7 @@ def main():
                     day.reset_speed()
                     print("Reset button pressed!")
                 if event.ui_element == FoodRun:
-                    test.forage(Beaut)
+                    test.forage(Beaut, day)
             Colony.check_events(test, day)
             manager.process_events(event)
         manager.update(time_delta)
@@ -69,6 +69,7 @@ def main():
         draw_game_screen(screen, font, test, Beaut, home, day)        
         manager.draw_ui(screen)
         test.feed(day)
+        day.turn_manager()
         pygame.display.flip()
         
     pygame.quit()

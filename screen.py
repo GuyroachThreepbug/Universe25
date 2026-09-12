@@ -113,7 +113,3 @@ def draw_game_screen(screen, font, Colony, BeautifulOne, nest, day):
     ## dice roll display
     
     ## flavortext display
-    
-    ## BUTTON LOGIC
-    
-   

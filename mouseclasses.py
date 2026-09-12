@@ -51,8 +51,7 @@ class Colony():
                 if self.hunger >= 0:  
                     self.stockpile -= self.feed_rate
                     self.hunger += self.feed_rate
-                    print("chompchomp")
-                    print(f"Stockpile: {self.stockpile}, Hunger: {self.hunger}")
+                    print("feeding")
             else:
                 self.hunger -= self.feed_rate
                 print("chomp")
@@ -67,15 +66,20 @@ class Colony():
             score = sum(roll)
             return score
     
-    def forage(self, Beaut):
-        score = self.dice_roll(self.dice_pool)
-        if score >= 8:
-            self.stockpile += 5
-            self.hunger -= 5
-        elif score >= 5 and score <= 7:
-            self.hunger -= 3
-        else:
-            Beaut.frustration_points += 5
+    def forage(self, Beaut, day):
+        
+        if day.turns_remaining > 0:
+        
+            score = self.dice_roll(self.dice_pool)
+            if score >= 8:
+                self.stockpile += 5
+                self.hunger -= 5
+            elif score >= 5 and score <= 7:
+                self.hunger -= 3
+            else:
+                Beaut.frustration_points += 5
+            print(f"{day.turns_remaining}")
+            day.turns_remaining -= 1
             
     def fresh_out(self):
         if self.hunger == 0:
